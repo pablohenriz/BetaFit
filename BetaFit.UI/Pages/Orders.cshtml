@@ -1,0 +1,18 @@
+@page
+@model OrdersModel
+@{
+    ViewData["Title"] = "Meus pedidos";
+}
+<div class="bf-container bf-section">
+    <h1>Meus pedidos</h1>
+    @if (!Model.Orders.Any()) { <p>Você ainda não realizou nenhum pedido. <a href="/Catalog">Ver produtos</a></p> }
+    else {
+        foreach (var order in Model.Orders) {
+            <div class="bf-cart__item">
+                <div><strong>Pedido #@order.Id.ToString()[..8]</strong><span>@order.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span></div>
+                <span>@order.ItemCount item(ns)</span><span>Status: @order.Status</span><strong>@order.Total.ToString("C")</strong>
+                <a href="/Orders/Details?id=@order.Id">Ver detalhes</a>
+            </div>
+        }
+    }
+</div>
