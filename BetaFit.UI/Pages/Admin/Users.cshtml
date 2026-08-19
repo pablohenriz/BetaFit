@@ -1,0 +1,8 @@
+@page
+@model UsersModel
+@{
+    ViewData["Title"] = "Usuários";
+}
+<div class="bf-container bf-section"><h1>Usuários</h1><div class="bf-cart">
+@foreach (var user in Model.Users) { <div class="bf-cart__item"><strong>@user.Name</strong><span>@user.Email</span><span>@user.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy")</span><span>@user.Role</span><span>@(user.IsActive ? "Ativo" : "Inativo")</span></div> }
+</div></div>
