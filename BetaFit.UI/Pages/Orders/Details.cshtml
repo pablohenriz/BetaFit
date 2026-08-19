@@ -1,0 +1,15 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = "Detalhes do pedido";
+}
+<div class="bf-container bf-section">
+    <h1>Pedido #@Model.Order!.Id.ToString()[..8]</h1>
+    <p>Data: @Model.Order.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p>
+    <p>Status: @Model.Order.Status</p>
+    @foreach (var item in Model.Order.Items) {
+        <div class="bf-cart__item"><span>@item.ProductName</span><span>@item.Quantity × @item.UnitPrice.ToString("C")</span><strong>@item.Subtotal.ToString("C")</strong></div>
+    }
+    <h2>Total: @Model.Order.Total.ToString("C")</h2>
+    <a href="/Orders">Voltar aos pedidos</a>
+</div>
