@@ -4,24 +4,34 @@
     ViewData["Title"] = "Carrinho";
 }
 <div class="bf-container bf-section">
-    <div class="bf-section__head"><div><h1>Seu carrinho</h1><p>Um carrinho simples, sem checkout real.</p></div></div>
-    @if (!Model.Items.Any())
+    <div class="bf-section__head"><div><h1>Seu carrinho</h1><p>Produtos vinculados à sua conta.</p></div></div>
+    @if (!string.IsNullOrWhiteSpace(Model.Message)) { <p class="bf-alert">@Model.Message</p> }
+    @if (!Model.Cart.Items.Any())
     {
-        <p>Seu carrinho está vazio. <a href="/Catalog">Ver produtos</a></p>
+        <p>Seu carrinho está vazio. <a href="/Catalog">Continuar comprando</a></p>
     }
     else
     {
         <div class="bf-cart">
-        @foreach (var item in Model.Items)
+        @foreach (var item in Model.Cart.Items)
         {
             <div class="bf-cart__item">
                 <div class="bf-cart__image" style="background-image:url('@(item.ImageUrl ?? "/images/placeholder.jpg")')"></div>
-                <div><strong>@item.Name</strong><span>@item.Price.ToString("C") × @item.Quantity</span></div>
-                <strong>@((item.Price * item.Quantity).ToString("C"))</strong>
-                <a href="/Cart?remove=@item.ProductId">Remover</a>
+                <div><strong>@item.Name</strong><span>@item.Price.ToString("C")</span></div>
+                <form method="post" asp-page-handler="update">
+                    <input type="hidden" name="itemId" value="@item.Id" />
+                    <input type="number" name="quantity" value="@item.Quantity" min="1" max="999" />
+                    <button type="submit">Atualizar</button>
+                </form>
+                <strong>@item.Subtotal.ToString("C")</strong>
+                <form method="post" asp-page-handler="remove"><input type="hidden" name="itemId" value="@item.Id" /><button type="submit">Remover</button></form>
             </div>
         }
         </div>
-        <div class="bf-cart__total"><strong>Total: @Model.Total.ToString("C")</strong></div>
+        <div class="bf-cart__total"><strong>Total: @Model.Cart.Total.ToString("C")</strong></div>
+        <div style="display:flex;gap:1rem;margin-top:1rem">
+            <form method="post" asp-page-handler="clear"><button type="submit">Limpar carrinho</button></form>
+            <form method="post" asp-page-handler="checkout"><button type="submit">Finalizar pedido</button></form>
+        </div>
     }
 </div>
