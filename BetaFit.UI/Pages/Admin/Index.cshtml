@@ -6,20 +6,7 @@
 <div class="bf-container bf-admin">
     <div class="bf-section__head"><div><h1>Painel administrativo</h1><p>Dados reais vindos da API.</p></div><a class="bf-btn bf-btn--primary" href="/Admin/NewProduct">+ Adicionar produto</a></div>
     @if (!string.IsNullOrEmpty(Model.Message)) { <div class="alert alert-warning">@Model.Message</div> }
-    <div class="bf-grid">
-        <div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">USUÁRIOS</span><span class="bf-card__price">@Model.Dashboard.TotalUsers</span></div></div>
-        <div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">PRODUTOS</span><span class="bf-card__price">@Model.Dashboard.TotalProducts</span></div></div>
-        <div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">PEDIDOS</span><span class="bf-card__price">@Model.Dashboard.TotalOrders</span></div></div>
-    </div>
-    <p><a href="/Admin/Users">Usuários</a> · <a href="/Admin/Orders">Pedidos</a></p>
-    <h2>Gerenciar produtos</h2>
-    <div class="bf-grid">
-        @foreach (var product in Model.Products)
-        {
-            <div class="bf-card">
-                <div class="bf-card__image" style="background-image:url('@(product.ImageUrl ?? "/images/placeholder.jpg")')"></div>
-                <div class="bf-card__body"><span class="bf-card__cat">@product.CategoryName</span><span class="bf-card__name">@product.Name</span><span class="bf-card__price">@product.Price.ToString("C")</span><span>@(product.IsActive ? "Disponível" : "Inativo")</span></div>
-            </div>
-        }
-    </div>
+    <div class="bf-grid"><div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">USUÁRIOS</span><span class="bf-card__price">@Model.Dashboard.TotalUsers</span></div></div><div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">PRODUTOS</span><span class="bf-card__price">@Model.Dashboard.TotalProducts</span></div></div><div class="bf-card"><div class="bf-card__body"><span class="bf-card__cat">PEDIDOS</span><span class="bf-card__price">@Model.Dashboard.TotalOrders</span></div></div></div>
+    <p><a href="/Admin/Users">Usuários</a> · <a href="/Admin/Orders">Pedidos</a></p><h2>Gerenciar produtos</h2>
+    <div class="bf-grid">@foreach (var product in Model.Products){<div class="bf-card"><div class="bf-card__image" style="background-image:url('@(product.ImageUrl ?? "/images/placeholder.jpg")')"></div><div class="bf-card__body"><span class="bf-card__cat">@product.CategoryName</span><span class="bf-card__name">@product.Name</span><span class="bf-card__price">@product.Price.ToString("C")</span><span>@(product.IsActive ? "Disponível" : "Inativo")</span><a href="/Admin/EditProduct?id=@product.Id">Editar</a></div></div>}</div>
 </div>
