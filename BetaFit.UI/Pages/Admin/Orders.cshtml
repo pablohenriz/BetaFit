@@ -1,0 +1,8 @@
+@page
+@model OrdersModel
+@{
+    ViewData["Title"] = "Pedidos";
+}
+<div class="bf-container bf-section"><h1>Pedidos</h1><div class="bf-cart">
+@foreach (var order in Model.Orders) { <div class="bf-cart__item"><strong>Pedido #@order.Id.ToString()[..8]</strong><span>@order.UserName</span><span>@order.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</span><span>@order.ItemCount item(ns)</span><span>@order.Status</span><strong>@order.Total.ToString("C")</strong><a href="/Admin/Orders/Details?id=@order.Id">Detalhes</a></div> }
+</div></div>

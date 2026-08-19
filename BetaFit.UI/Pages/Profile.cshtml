@@ -1,0 +1,17 @@
+@page
+@model ProfileModel
+@{
+    ViewData["Title"] = "Meu perfil";
+}
+<div class="bf-container bf-section">
+    <h1>Meu perfil</h1>
+    @if (Model.Profile is null) { <p>Não foi possível carregar seu perfil.</p> }
+    else {
+        <p><strong>Nome:</strong> @Model.Profile.Name</p>
+        <p><strong>E-mail:</strong> @Model.Profile.Email</p>
+        <p><strong>Data de cadastro:</strong> @Model.Profile.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy")</p>
+        <p><strong>Tipo de usuário:</strong> @Model.Profile.Role</p>
+        <p><a href="/Orders">Meus pedidos</a></p>
+        <p><a href="/Logout">Sair</a></p>
+    }
+</div>

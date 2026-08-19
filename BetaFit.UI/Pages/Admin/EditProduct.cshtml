@@ -1,0 +1,8 @@
+@page
+@model EditProductModel
+@{
+    ViewData["Title"] = "Editar produto";
+}
+<div class="bf-container bf-section"><h1>Editar produto</h1>@if(Model.Message is not null){<p>@Model.Message</p>}
+<form method="post"><input type="hidden" asp-for="Id" /><label>Nome<input asp-for="Name" /></label><label>Descrição<textarea asp-for="Description"></textarea></label><label>Preço<input asp-for="Price" type="number" step="0.01" /></label><label>Categoria<select asp-for="CategoryId" asp-items="Model.Categories"></select></label><label>Gênero<select asp-for="Gender"><option value="0">Unissex</option><option value="1">Masculino</option><option value="2">Feminino</option></select></label><label>Imagem URL<input asp-for="ImageUrl" /></label><button type="submit">Salvar alterações</button></form>
+<form method="post" asp-page-handler="delete" style="margin-top:1rem" onsubmit="return confirm('Tem certeza que deseja excluir este produto?');"><input type="hidden" name="id" value="@Model.Id" /><button type="submit">Excluir</button></form></div>
