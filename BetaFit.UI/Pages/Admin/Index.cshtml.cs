@@ -11,11 +11,11 @@ public class IndexModel : PageModel
     private readonly IBetaFitApiClient _api;
     public IndexModel(IBetaFitApiClient api) => _api = api;
     public IReadOnlyList<ProductListItemResponse> Products { get; private set; } = Array.Empty<ProductListItemResponse>();
+    public AdminDashboard Dashboard { get; private set; } = new();
     public string? Message { get; private set; }
-
     public async Task OnGetAsync(CancellationToken ct)
     {
-        try { Products = await _api.GetAdminProductsAsync(ct); }
-        catch { Message = "Não foi possível carregar os produtos."; }
+        try { Dashboard = await _api.GetAdminDashboardAsync(ct) ?? new(); Products = await _api.GetAdminProductsAsync(ct); }
+        catch { Message = "Não foi possível carregar o painel administrativo."; }
     }
 }
