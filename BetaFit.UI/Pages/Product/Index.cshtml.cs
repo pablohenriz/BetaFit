@@ -1,3 +1,4 @@
+using BetaFit.UI.Models;
 using BetaFit.UI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
