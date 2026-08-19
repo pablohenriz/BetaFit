@@ -1,0 +1,10 @@
+@page
+@model DetailsModel
+@{
+    ViewData["Title"] = "Detalhes do pedido";
+}
+<div class="bf-container bf-section">
+<h1>Pedido #@Model.Order!.Id.ToString()[..8]</h1><p>Cliente: @Model.Order.UserName</p><p>Data: @Model.Order.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</p><p>Total: @Model.Order.Total.ToString("C")</p>
+<form method="post" asp-page-handler="status"><input type="hidden" name="id" value="@Model.Order.Id" /><select name="status"><option selected="@(Model.Order.Status == "Pending")">Pending</option><option selected="@(Model.Order.Status == "Paid")">Paid</option><option selected="@(Model.Order.Status == "Shipped")">Shipped</option><option selected="@(Model.Order.Status == "Delivered")">Delivered</option><option selected="@(Model.Order.Status == "Cancelled")">Cancelled</option></select><button type="submit">Atualizar status</button></form>
+@foreach (var item in Model.Order.Items) { <div class="bf-cart__item"><span>@item.ProductName</span><span>@item.Quantity × @item.UnitPrice.ToString("C")</span><strong>@item.Subtotal.ToString("C")</strong></div> }
+</div>
