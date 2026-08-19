@@ -1,0 +1,19 @@
+@page
+@model BetaFit.UI.Pages.Admin.IndexModel
+@using BetaFit.UI.Models
+@{
+    ViewData["Title"] = "Administração";
+}
+<div class="bf-container bf-admin">
+    <div class="bf-section__head"><div><h1>Painel administrativo</h1><p>Gerencie os produtos da loja.</p></div><a class="bf-btn bf-btn--primary" href="/Admin/NewProduct">+ Adicionar produto</a></div>
+    @if (!string.IsNullOrEmpty(Model.Message)) { <div class="alert alert-warning">@Model.Message</div> }
+    <div class="bf-grid">
+        @foreach (var product in Model.Products)
+        {
+            <div class="bf-card">
+                <div class="bf-card__image" style="background-image:url('@(product.ImageUrl ?? "/images/placeholder.jpg")')"></div>
+                <div class="bf-card__body"><span class="bf-card__cat">@product.CategoryName</span><span class="bf-card__name">@product.Name</span><span class="bf-card__price">@product.Price.ToString("C")</span></div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,20 @@
+@page
+@model BetaFit.UI.Pages.Admin.NewProductModel
+@using BetaFit.UI.Models
+@{
+    ViewData["Title"] = "Novo produto";
+}
+<div class="bf-container bf-admin bf-auth">
+    <h1>Novo produto</h1>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage)) { <div class="alert alert-warning">@Model.ErrorMessage</div> }
+    <form method="post" enctype="multipart/form-data" class="bf-form">
+        <label>Nome<input asp-for="Name" required /></label>
+        <label>Descrição<textarea asp-for="Description"></textarea></label>
+        <label>Preço<input asp-for="Price" type="number" step="0.01" required /></label>
+        <label>Categoria<select asp-for="CategoryId" asp-items="Model.CategoryOptions" required></select></label>
+        <label>Gênero<select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()"></select></label>
+        <label>Imagem<input asp-for="Image" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+        <label><input asp-for="IsFeatured" type="checkbox" /> Produto em destaque</label>
+        <button class="bf-btn bf-btn--primary" type="submit">Salvar produto</button>
+    </form>
+</div>

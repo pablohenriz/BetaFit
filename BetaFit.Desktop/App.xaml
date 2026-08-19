@@ -1,0 +1,53 @@
+<Application x:Class="BetaFit.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:helpers="clr-namespace:BetaFit.Desktop.Helpers">
+    <Application.Resources>
+        <ResourceDictionary>
+            <helpers:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+            <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <helpers:ActiveStatusTextConverter x:Key="ActiveStatusTextConverter" />
+
+            <SolidColorBrush x:Key="BfBackground" Color="#0B0B0D" />
+            <SolidColorBrush x:Key="BfSurface" Color="#17171A" />
+            <SolidColorBrush x:Key="BfBorder" Color="#232326" />
+            <SolidColorBrush x:Key="BfAccent" Color="#D7FF3F" />
+            <SolidColorBrush x:Key="BfText" Color="#F5F5F5" />
+            <SolidColorBrush x:Key="BfMuted" Color="#8A8A8F" />
+            <SolidColorBrush x:Key="BfDanger" Color="#FF5C5C" />
+
+            <Style TargetType="Button" x:Key="BfPrimaryButton">
+                <Setter Property="Background" Value="{StaticResource BfAccent}" />
+                <Setter Property="Foreground" Value="#0B0B0D" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Padding" Value="14,8" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="BfSecondaryButton">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource BfText}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BfBorder}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="12,6" />
+                <Setter Property="Cursor" Value="Hand" />
+            </Style>
+
+            <Style TargetType="TextBox" x:Key="BfTextBox">
+                <Setter Property="Background" Value="{StaticResource BfSurface}" />
+                <Setter Property="Foreground" Value="{StaticResource BfText}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BfBorder}" />
+                <Setter Property="Padding" Value="8" />
+                <Setter Property="CaretBrush" Value="{StaticResource BfText}" />
+            </Style>
+
+            <Style TargetType="ComboBox" x:Key="BfComboBox">
+                <Setter Property="Background" Value="{StaticResource BfSurface}" />
+                <Setter Property="Foreground" Value="{StaticResource BfText}" />
+                <Setter Property="BorderBrush" Value="{StaticResource BfBorder}" />
+                <Setter Property="Padding" Value="8" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

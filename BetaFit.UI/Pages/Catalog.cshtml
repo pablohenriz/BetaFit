@@ -1,0 +1,85 @@
+@page "/Catalog"
+@model CatalogModel
+@{
+    ViewData["Title"] = "Catálogo";
+}
+
+@if (Model.ApiUnavailable)
+{
+    <div class="bf-container" style="padding-top:24px;">
+        <div class="alert alert-warning" role="alert">O catálogo está temporariamente indisponível. Inicie a BetaFit.API em <code>http://localhost:5000</code> e atualize a página.</div>
+    </div>
+}
+
+<section class="bf-section">
+    <div class="bf-container">
+        <div class="bf-section__head">
+            <div>
+                <h2>Catálogo</h2>
+                <p>@Model.Result.TotalCount produto(s) encontrado(s).</p>
+            </div>
+        </div>
+
+        <form method="get" class="bf-toolbar">
+            <input class="bf-input" type="text" name="SearchTerm" placeholder="Buscar produto..." value="@Model.SearchTerm" />
+
+            <select class="bf-select" name="CategoryId">
+                <option value="">Todas as categorias</option>
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id" selected="@(Model.CategoryId == category.Id)">@category.Name</option>
+                }
+            </select>
+
+            <select class="bf-select" name="Gender">
+                <option value="">Todos os gêneros</option>
+                <option value="Masculino" selected="@(Model.Gender == Gender.Masculino)">Masculino</option>
+                <option value="Feminino" selected="@(Model.Gender == Gender.Feminino)">Feminino</option>
+                <option value="Unissex" selected="@(Model.Gender == Gender.Unissex)">Unissex</option>
+            </select>
+
+            <select class="bf-select" name="SortBy">
+                <option value="">Ordenar por nome</option>
+                <option value="price_asc" selected="@(Model.SortBy == "price_asc")">Menor preço</option>
+                <option value="price_desc" selected="@(Model.SortBy == "price_desc")">Maior preço</option>
+                <option value="newest" selected="@(Model.SortBy == "newest")">Novidades</option>
+            </select>
+
+            <button class="bf-btn bf-btn--primary" type="submit">Filtrar</button>
+        </form>
+
+        <div class="bf-grid">
+            @foreach (var product in Model.Result.Items)
+            {
+                <a class="bf-card" href="/Product/@product.Id">
+                    <div class="bf-card__image" style="background-image:url('@(product.ImageUrl ?? "/images/placeholder.jpg")')">
+                        @if (product.IsFeatured)
+                        {
+                            <span class="bf-card__badge">Destaque</span>
+                        }
+                    </div>
+                    <div class="bf-card__body">
+                        <span class="bf-card__cat">@product.CategoryName</span>
+                        <span class="bf-card__name">@product.Name</span>
+                        <span class="bf-card__price">@product.Price.ToString("C")</span>
+                    </div>
+                </a>
+            }
+            @if (!Model.Result.Items.Any())
+            {
+                <p>Nenhum produto encontrado com os filtros selecionados.</p>
+            }
+        </div>
+
+        @if (Model.Result.TotalPages > 1)
+        {
+            <div class="bf-pagination">
+                @for (int i = 1; i <= Model.Result.TotalPages; i++)
+                {
+                    <a class="@(i == Model.Result.Page ? "active" : "")"
+                       href="/Catalog?SearchTerm=@Model.SearchTerm&CategoryId=@Model.CategoryId&Gender=@Model.Gender&SortBy=@Model.SortBy&Page=@i">@i</a>
+                }
+            </div>
+        }
+    </div>
+</section>

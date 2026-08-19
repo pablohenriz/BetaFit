@@ -1,0 +1,50 @@
+<Window x:Class="BetaFit.Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:BetaFit.Desktop.Views"
+        xmlns:vm="clr-namespace:BetaFit.Desktop.ViewModels"
+        Title="Beta Fit — Painel Administrativo"
+        Height="760" Width="1200"
+        Background="{StaticResource BfBackground}"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource BfSurface}" BorderBrush="{StaticResource BfBorder}" BorderThickness="0,0,1,0">
+            <DockPanel LastChildFill="False">
+                <StackPanel DockPanel.Dock="Top" Margin="24,28,24,36">
+                    <TextBlock FontSize="22" FontWeight="Black" Foreground="{StaticResource BfText}">
+                        BETA<Run Foreground="{StaticResource BfAccent}" Text="FIT" />
+                    </TextBlock>
+                    <TextBlock Text="Painel administrativo" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,4,0,0" />
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Top" Margin="12,0">
+                    <Button Content="Dashboard" Style="{StaticResource BfSecondaryButton}" HorizontalAlignment="Stretch" Margin="0,0,0,8"
+                            Command="{Binding NavigateCommand}" CommandParameter="Dashboard" />
+                    <Button Content="Produtos" Style="{StaticResource BfSecondaryButton}" HorizontalAlignment="Stretch" Margin="0,0,0,8"
+                            Command="{Binding NavigateCommand}" CommandParameter="Products" />
+                    <Button Content="Categorias" Style="{StaticResource BfSecondaryButton}" HorizontalAlignment="Stretch" Margin="0,0,0,8"
+                            Command="{Binding NavigateCommand}" CommandParameter="Categories" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Content -->
+        <Grid Grid.Column="1" Margin="32">
+            <views:DashboardView DataContext="{Binding DashboardViewModel}"
+                                  Visibility="{Binding DataContext.CurrentSection, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Dashboard}" />
+
+            <views:ProductsView DataContext="{Binding ProductListViewModel}"
+                                 Visibility="{Binding DataContext.CurrentSection, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Products}" />
+
+            <views:CategoriesView DataContext="{Binding CategoryListViewModel}"
+                                   Visibility="{Binding DataContext.CurrentSection, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Categories}" />
+        </Grid>
+    </Grid>
+</Window>

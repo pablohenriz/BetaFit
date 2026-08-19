@@ -1,0 +1,118 @@
+<UserControl x:Class="BetaFit.Desktop.Views.ProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,16">
+            <TextBlock Text="Produtos" FontSize="26" FontWeight="Black" Foreground="{StaticResource BfText}" />
+            <TextBlock Text="Gerencie o catálogo de produtos da Beta Fit." Foreground="{StaticResource BfMuted}" Margin="0,4,0,0" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
+            <TextBox Width="260" Style="{StaticResource BfTextBox}" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,8,0" />
+            <Button Content="Buscar" Style="{StaticResource BfSecondaryButton}" Command="{Binding SearchCommand}" Margin="0,0,8,0" />
+            <Button Content="+ Novo produto" Style="{StaticResource BfPrimaryButton}" Command="{Binding NewProductCommand}" />
+
+            <TextBlock Text="{Binding ErrorMessage}" Foreground="{StaticResource BfDanger}" VerticalAlignment="Center" Margin="16,0,0,0"
+                       Visibility="{Binding ErrorMessage, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock Text="{Binding SuccessMessage}" Foreground="{StaticResource BfAccent}" VerticalAlignment="Center" Margin="16,0,0,0"
+                       Visibility="{Binding SuccessMessage, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="360" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Tabela -->
+            <DataGrid Grid.Column="0" ItemsSource="{Binding Products}" AutoGenerateColumns="False"
+                      Background="{StaticResource BfSurface}" Foreground="{StaticResource BfText}"
+                      RowBackground="{StaticResource BfSurface}" BorderBrush="{StaticResource BfBorder}"
+                      GridLinesVisibility="Horizontal" HeadersVisibility="Column" CanUserAddRows="False"
+                      IsReadOnly="True" Margin="0,0,16,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="*" />
+                    <DataGridTextColumn Header="Categoria" Binding="{Binding CategoryName}" Width="130" />
+                    <DataGridTextColumn Header="Preço" Binding="{Binding Price, StringFormat='C'}" Width="90" />
+                    <DataGridTextColumn Header="Status" Binding="{Binding IsActive, Converter={StaticResource ActiveStatusTextConverter}}" Width="80" />
+                    <DataGridCheckBoxColumn Header="Destaque" Binding="{Binding IsFeatured}" Width="70" />
+                    <DataGridTemplateColumn Header="Ações" Width="300">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Editar" Style="{StaticResource BfSecondaryButton}" Padding="8,4" Margin="0,0,6,0"
+                                            Command="{Binding DataContext.EditProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Ativar/Desativar" Style="{StaticResource BfSecondaryButton}" Padding="8,4" Margin="0,0,6,0"
+                                            Command="{Binding DataContext.ToggleActiveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Destaque" Style="{StaticResource BfSecondaryButton}" Padding="8,4" Margin="0,0,6,0"
+                                            Command="{Binding DataContext.ToggleFeaturedCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
+                                    <Button Content="Excluir" Style="{StaticResource BfSecondaryButton}" Padding="8,4"
+                                            Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Formulário -->
+            <Border Grid.Column="1" Background="{StaticResource BfSurface}" BorderBrush="{StaticResource BfBorder}" BorderThickness="1"
+                    Padding="20" Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="Produto" FontWeight="Bold" Foreground="{StaticResource BfText}" Margin="0,0,0,12" />
+
+                        <TextBlock Text="Nome" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource BfTextBox}" Text="{Binding FormName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+
+                        <TextBlock Text="Descrição" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource BfTextBox}" Text="{Binding FormDescription, UpdateSourceTrigger=PropertyChanged}"
+                                  AcceptsReturn="True" Height="70" TextWrapping="Wrap" Margin="0,0,0,12" />
+
+                        <TextBlock Text="Preço (demonstrativo)" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource BfTextBox}" Text="{Binding FormPrice, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+
+                        <TextBlock Text="URL da imagem" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <TextBox Style="{StaticResource BfTextBox}" Text="{Binding FormImageUrl, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,12" />
+
+                        <TextBlock Text="Categoria" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <ComboBox Style="{StaticResource BfComboBox}" ItemsSource="{Binding Categories}" DisplayMemberPath="Name"
+                                  SelectedItem="{Binding FormCategory}" Margin="0,0,0,12" />
+
+                        <TextBlock Text="Gênero" Foreground="{StaticResource BfMuted}" FontSize="11" Margin="0,0,0,4" />
+                        <ComboBox Style="{StaticResource BfComboBox}" ItemsSource="{Binding GenderOptions}"
+                                  SelectedItem="{Binding FormGender}" Margin="0,0,0,12" />
+
+                        <CheckBox Content="Produto em destaque" Foreground="{StaticResource BfText}"
+                                  IsChecked="{Binding FormIsFeatured}" Margin="0,0,0,20" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Salvar" Style="{StaticResource BfPrimaryButton}" Command="{Binding SaveCommand}" Margin="0,0,8,0" />
+                            <Button Content="Cancelar" Style="{StaticResource BfSecondaryButton}" Command="{Binding CancelEditCommand}" />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,16,0,0">
+            <Button Content="◀ Anterior" Style="{StaticResource BfSecondaryButton}" Command="{Binding PreviousPageCommand}" Margin="0,0,8,0" />
+            <TextBlock Text="{Binding Page}" Foreground="{StaticResource BfText}" VerticalAlignment="Center" Margin="0,0,4,0" />
+            <TextBlock Text="/" Foreground="{StaticResource BfMuted}" VerticalAlignment="Center" Margin="0,0,4,0" />
+            <TextBlock Text="{Binding TotalPages}" Foreground="{StaticResource BfMuted}" VerticalAlignment="Center" Margin="0,0,8,0" />
+            <Button Content="Próxima ▶" Style="{StaticResource BfSecondaryButton}" Command="{Binding NextPageCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

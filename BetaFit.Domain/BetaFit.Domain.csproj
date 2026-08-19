@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BetaFit.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+    Propositalmente sem NENHUMA dependência de pacote externo.
+    O Domain não pode conhecer ASP.NET Core, EF Core, SQL Server, UI ou Desktop.
+  -->
+
+</Project>

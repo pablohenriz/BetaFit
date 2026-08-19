@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Beta Fit</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="bf-navbar">
+        <div class="bf-container bf-navbar__inner">
+            <a class="bf-logo" href="/">BETA<span>FIT</span></a>
+            <nav class="bf-nav">
+                <a href="/">Home</a>
+                <a href="/Catalog">Catálogo</a>
+                <a href="/Catalog?gender=Masculino">Masculino</a>
+                <a href="/Catalog?gender=Feminino">Feminino</a>
+                <a href="#sobre">Sobre</a>
+                <a href="/Cart">Carrinho (@CartService.Get(Context).Sum(x => x.Quantity))</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    @if (User.IsInRole("Admin")) { <a href="/Admin">Admin</a> }
+                    <a href="/Logout">Sair</a>
+                }
+                else
+                {
+                    <a href="/Login">Entrar</a>
+                }
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="bf-footer">
+        <div class="bf-container bf-footer__inner">
+            <div>
+                <div class="bf-logo">BETA<span>FIT</span></div>
+                <p>Performance, atitude e identidade em cada treino.</p>
+            </div>
+            <div>
+                <h4>Institucional</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/Catalog">Catálogo</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contato</h4>
+                <p>Projeto institucional/demonstrativo de portfólio.<br />Sem vendas reais.</p>
+            </div>
+        </div>
+        <p class="bf-footer__copy">&copy; @DateTime.Now.Year Beta Fit. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

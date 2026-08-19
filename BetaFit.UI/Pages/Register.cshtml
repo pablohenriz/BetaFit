@@ -1,0 +1,16 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Cadastro";
+}
+<div class="bf-container bf-auth">
+    <h1>Criar conta</h1>
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage)) { <div class="alert alert-warning">@Model.ErrorMessage</div> }
+    <form method="post" class="bf-form">
+        <label>Nome<input asp-for="Name" required /></label>
+        <label>E-mail<input asp-for="Email" type="email" required /></label>
+        <label>Senha<input asp-for="Password" type="password" minlength="6" required /></label>
+        <button class="bf-btn bf-btn--primary" type="submit">Cadastrar</button>
+    </form>
+    <p>Já possui conta? <a href="/Login">Entrar</a></p>
+</div>
