@@ -5,10 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BetaFit.Application.Common;
 
-/// <summary>
-/// Ponto único de registro dos serviços da camada Application no container de DI.
-/// Chamado a partir da BetaFit.API (Program.cs).
-/// </summary>
 public static class ApplicationServiceCollectionExtensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
@@ -17,9 +13,8 @@ public static class ApplicationServiceCollectionExtensions
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IDashboardService, DashboardService>();
         services.AddScoped<IAuthService, AuthService>();
-
+        services.AddScoped<StoreService>();
         services.AddValidatorsFromAssembly(typeof(ApplicationServiceCollectionExtensions).Assembly);
-
         return services;
     }
 }
