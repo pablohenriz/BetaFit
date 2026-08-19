@@ -1,5 +1,4 @@
 namespace BetaFit.UI.Models;
-
 public class ProfileResponse { public Guid Id { get; set; } public string Name { get; set; } = ""; public string Email { get; set; } = ""; public DateTime CreatedAt { get; set; } public string Role { get; set; } = ""; public bool IsActive { get; set; } }
 public class CartApiItem { public Guid Id { get; set; } public Guid ProductId { get; set; } public string Name { get; set; } = ""; public string? ImageUrl { get; set; } public decimal Price { get; set; } public int Quantity { get; set; } public decimal Subtotal { get; set; } }
 public class CartApiResponse { public IReadOnlyList<CartApiItem> Items { get; set; } = Array.Empty<CartApiItem>(); public decimal Total { get; set; } public int ItemCount { get; set; } }
@@ -11,3 +10,4 @@ public class OrderDetail : OrderListItem { public IReadOnlyList<OrderItemApi> It
 public class UpdateOrderStatusRequest { public string Status { get; set; } = ""; }
 public class AdminUser { public Guid Id { get; set; } public string Name { get; set; } = ""; public string Email { get; set; } = ""; public DateTime CreatedAt { get; set; } public string Role { get; set; } = ""; public bool IsActive { get; set; } }
 public class AdminDashboard { public int TotalUsers { get; set; } public int TotalProducts { get; set; } public int TotalOrders { get; set; } }
+public class UpdateProductRequest { public string Name { get; set; } = ""; public string Description { get; set; } = ""; public decimal Price { get; set; } public string? ImageUrl { get; set; } public Guid CategoryId { get; set; } public Gender Gender { get; set; } }
