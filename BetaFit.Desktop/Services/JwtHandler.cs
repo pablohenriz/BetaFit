@@ -1,0 +1,3 @@
+using System.Net.Http.Headers;
+namespace BetaFit.Desktop.Services;
+public sealed class JwtHandler:DelegatingHandler { private readonly Session _session; public JwtHandler(Session session)=>_session=session; protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,CancellationToken cancellationToken){if(_session.IsAuthenticated)request.Headers.Authorization=new AuthenticationHeaderValue("Bearer",_session.Token);return base.SendAsync(request,cancellationToken);} }

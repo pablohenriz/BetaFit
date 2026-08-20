@@ -1,0 +1,30 @@
+name: BetaFit Desktop Validation
+on:
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore
+        run: dotnet restore BetaFit.sln
+      - name: Build
+        run: dotnet build BetaFit.sln --no-restore -p:EnableWindowsTargeting=true --configuration Release
+      - name: Test
+        run: dotnet test BetaFit.sln --no-build --configuration Release
+      - name: Package source
+        run: |
+          zip -r BetaFit-WinForms-Refactor.zip . -x ".git/*" "**/bin/*" "**/obj/*"
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: BetaFit-WinForms-Refactor
+          path: BetaFit-WinForms-Refactor.zip
