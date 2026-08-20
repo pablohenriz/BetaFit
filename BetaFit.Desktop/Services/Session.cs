@@ -1,0 +1,2 @@
+namespace BetaFit.Desktop.Services;
+public sealed class Session { public string Token{get;private set;}=""; public string UserName{get;private set;}=""; public string Role{get;private set;}=""; public bool IsAuthenticated=>!string.IsNullOrWhiteSpace(Token); public void SignIn(Models.AuthResponse r){Token=r.Token;UserName=r.Name;Role=r.Role;} public void SignOut(){Token="";UserName="";Role="";} }
