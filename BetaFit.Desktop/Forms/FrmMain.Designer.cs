@@ -1,0 +1,2 @@
+namespace BetaFit.Desktop.Forms;
+partial class FrmMain { private Panel pnlContent=null!; private void InitializeComponent(){Text="BetaFit | Administração";StartPosition=FormStartPosition.CenterScreen;MinimumSize=new Size(1100,700);Size=new Size(1400,850);BackColor=Color.FromArgb(15,18,23);pnlContent=new Panel{Dock=DockStyle.Fill,BackColor=Color.FromArgb(15,18,23)};Controls.Add(pnlContent);} }
